@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
+  "devToolsPort": 19003,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 37834,
+  "packagerPid": 43369,
   "expoServerNgrokUrl": "https://in-a9m.anonymous.birdwatchingapp3.exp.direct",
   "packagerNgrokUrl": "https://packager.in-a9m.anonymous.birdwatchingapp3.exp.direct",
-  "ngrokPid": 37843
+  "ngrokPid": 43378
 }
