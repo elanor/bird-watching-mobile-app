@@ -3,11 +3,21 @@ import { Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard} 
 import styles from '../App';
 import App from '../App';
 
-
-
-
-
 class DetailsScreen extends Component {
+  birdName = ""
+  birdRarity = ""
+  birdGeolocation= ""
+  birdImagelink=""
+  birdComment = ""
+  birdTimestamp = ""
+
+  constructor(props) {
+    super(props);
+    //this.state = { name: '' }
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  
+  }
 
   static navigationOptions = {
     title: 'Details',
@@ -15,18 +25,22 @@ class DetailsScreen extends Component {
 
   handleNameChange(name) {
     this.setState({ name });
+    this.birdName=name;
   }
   
   handleSubmit() {
-    saveSettings(this.state);
-  }
+    //saveSettings(this.state);
+    var birdDataInstance = new BirdData();
+    newBird = {
+      name: this.birdName,
+      rarity: this.birdRarity,
+      geolocation: this.birdGeolocation,
+      imagelink: this.birdImagelink,
+      comment: this.birdComment,
+      timestamp: this.birdTimestamp
+    }
 
-  constructor(props) {
-    super(props);
-    this.state = { name: '' }
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  
+    birdDataInstance.addBird(newBird)
   }
 
 /* style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} */
@@ -35,10 +49,9 @@ class DetailsScreen extends Component {
 render() {
     return (
       <ScrollView> 
-      <View >
+      <View>
         
             <TextInput 
-
               style={styles.textInput}
               placeholder="Species' name"
               maxLength={20}
