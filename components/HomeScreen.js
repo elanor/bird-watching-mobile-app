@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import { Button, View, Text, ListView } from 'react-native';
+import { Button, View, Text, ListView } from 'react-native'
+//import styles from '../App';
+import birddata from './BirdData';
 
 class HomeScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Recorded species',
+  };
+
   constructor(props) {
     super(props);
-    this.birdDataInstance = new BirdData();
+    console.log("HomeScreen constructor");
+    this.birdDataInstance = birddata;
   }
-
+  
   createBirdListText() {
-    var birdArrray = this.birdDataInstance.getData()
+    console.log("createBirdListText")
+    var birdArray = birdDataInstance.getData()
     var text = "\b"
     /* var l = birdArrray.length
     var i=0
@@ -19,16 +27,18 @@ class HomeScreen extends Component {
 
     } */
 
-    for (var i=0; i < birdArrray.length; i++) {
-      
+    for (var i=0; i < birdArray.length; i++) {
+      console.log("for loop");
+      if(i>500){
+        console.log("InfiniteLoop!!!! or 100000+ birds")
+        return "";
+      }
     }
-
-    return 
+    return text;
   }
-  static navigationOptions = {
-    title: 'Recorded species',
-  };
+
   render() {
+    console.log("bird constructor");
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Here goes list of species{this.createBirdListText}</Text>

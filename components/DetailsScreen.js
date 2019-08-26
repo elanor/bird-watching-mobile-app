@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard} from 'react-native';
-import styles from '../App';
-import App from '../App';
+//import styles from '../App';
+// BirdData =require( './BirdData');
+//import BirdData from './BirdData';
+
+import birddata from './BirdData';
+
 
 class DetailsScreen extends Component {
-  birdName = ""
-  birdRarity = ""
-  birdGeolocation= ""
-  birdImagelink=""
-  birdComment = ""
-  birdTimestamp = ""
+  birdName = "a"
+  birdRarity = "a"
+  birdGeolocation= "a"
+  birdImagelink="a"
+  birdComment = "a"
+  birdTimestamp = "a"
 
   constructor(props) {
     super(props);
-    //this.state = { name: '' }
+    console.log("details constructor");
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  
   }
 
   static navigationOptions = {
@@ -24,13 +27,22 @@ class DetailsScreen extends Component {
   };
 
   handleNameChange(name) {
+    console.log("handleNameChange constructor");
     this.setState({ name });
     this.birdName=name;
   }
   
   handleSubmit() {
+    console.log("handleSubmit constructor");
     //saveSettings(this.state);
-    var birdDataInstance = new BirdData();
+    if(!this.birdName.length>0){
+      alert("hulabaloo")
+      return;
+    }
+    console.log("I dont hate you")
+    //let birdDataInstance = new BirdData();
+    var birdDataInstance = birddata;
+    console.log("I hate you")
     newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
@@ -39,32 +51,39 @@ class DetailsScreen extends Component {
       comment: this.birdComment,
       timestamp: this.birdTimestamp
     }
+    console.log("I am confused")
 
-    birdDataInstance.addBird(newBird)
+    birdDataInstance.addBird(newBird);
+
+    console.log("bring da drinks")
   }
 
 /* style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} */
 /* style={styles.inputContainer} */
 
 render() {
+  console.log("DetailsScreen render");
     return (
-      <ScrollView> 
+      
       <View>
+        <ScrollView> 
         
             <TextInput 
-              style={styles.textInput}
+              //style={styles.textInput}
               placeholder="Species' name"
               maxLength={20}
               onBlur={Keyboard.dismiss}
-              value={this.state.name}
+              value={this.birdName}
               onChangeText={this.handleNameChange}
             />
 
             <TouchableOpacity
-              style={styles.saveButton}
+              // style={styles.saveButton}
               onPress={this.handleSubmit}
             >
-              <Text style={styles.saveButtonText}>Save</Text>
+              <Text 
+              //style={styles.saveButtonText}
+              >Save</Text>
             </TouchableOpacity>
           
         <Button
@@ -79,9 +98,9 @@ render() {
           title="Go back"
           onPress={() => this.props.navigation.goBack()}
         />
-        
+    </ScrollView> 
       </View>
-      </ScrollView>  
+       
     );
   }
 }
