@@ -22,6 +22,7 @@ class BirdData {
     */
    
     var birdArray = [];    
+    //
     birdArray = this.readBirdsArrayFromFile();
   }
 
@@ -34,7 +35,7 @@ class BirdData {
     //read birdArray from file
     readBirdsArrayFromFile() {
       console.log("readBirdsArrayFromFile");
-      newBird = {
+      /* newBird = {
         name: "B",
         rarity: "B",
         geolocation: "B",
@@ -43,7 +44,7 @@ class BirdData {
         timestamp: "B"
       }
       var newBirdArray = {newBird}; //= read from file :)
-      return newBirdArray;
+      return newBirdArray; */
     }
 
     // only for internal use

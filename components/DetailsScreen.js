@@ -43,17 +43,17 @@ class DetailsScreen extends Component {
     //let birdDataInstance = new BirdData();
     var birdDataInstance = birddata;
     console.log("I hate you")
-    newBird = {
+    /* newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
       geolocation: this.birdGeolocation,
       imagelink: this.birdImagelink,
       comment: this.birdComment,
       timestamp: this.birdTimestamp
-    }
+    } */
     console.log("I am confused")
 
-    birdDataInstance.addBird(newBird);
+    //birdDataInstance.addBird(newBird);
 
     console.log("bring da drinks")
   }
