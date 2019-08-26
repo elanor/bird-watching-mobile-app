@@ -1,3 +1,7 @@
+//import { AsyncResource } from "async_hooks";
+//import { AsyncStorage } from "react-native";
+//import {saveBirdData} from "src/storage/dataStorage"
+
 //Singleton class
 class BirdData{
   static instance;
@@ -36,6 +40,7 @@ class BirdData{
 
   // only for internal use
   updateFile(){
+    //saveBirdData(this.state);
     
     // save current birdArray to file
   }
