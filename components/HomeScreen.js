@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Button, View, Text, ListView } from 'react-native'
-//import styles from '../App';
+import styles from '../App';
 import birddata from './BirdData';
 
 class HomeScreen extends Component {
 
   static navigationOptions = {
-    title: 'Recorded species',
+    title: 'Recorded Species',
   };
 
   constructor(props) {
@@ -42,7 +42,8 @@ class HomeScreen extends Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Here goes list of species{this.createBirdListText}</Text>
-        <Button
+        <Button 
+          style = {styles.saveButton}
           title="Add new"
           onPress={() => this.props.navigation.navigate('Details')}
         />

@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    marginBottom: 16,
   },
 
   item: {
@@ -65,7 +66,10 @@ const styles = StyleSheet.create({
 
   inputContainer: {
     paddingTop: 15
+    
+  
   },
+
 
   textInput: {
     borderColor: '#CCCCCC',
@@ -75,6 +79,17 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingLeft: 20,
     paddingRight: 20
+  },
+
+  textInputContainer: {
+    borderColor: '#CCCCCC',
+    borderWidth: 1,
+    borderBottomWidth: 1,
+    height: 150,
+    paddingLeft: 20,
+    paddingRight: 20
+
+
   },
 
   saveButton: {
