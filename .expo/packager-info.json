@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19003,
   "expoServerPort": 19000,
-  "packagerPort": null,
-  "packagerPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 70967,
   "expoServerNgrokUrl": "https://ds-4sv.anonymous.birdwatchingapp3.exp.direct",
   "packagerNgrokUrl": "https://packager.ds-4sv.anonymous.birdwatchingapp3.exp.direct",
-  "ngrokPid": 67225
+  "ngrokPid": 70985
 }

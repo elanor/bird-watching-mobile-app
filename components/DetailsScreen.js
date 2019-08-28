@@ -14,7 +14,7 @@ import birddata from './BirdData';
 
 class DetailsScreen extends Component {
   birdName = "Name of a bird"
-  birdRarity = ""
+  birdRarity = "common"
   birdGeolocation= ""
   birdImagelink=""
   birdComment = ""
@@ -80,11 +80,9 @@ class DetailsScreen extends Component {
       this.birdName = name;
     }
 
-  // here goes rarity
-  
-  handleRarityChange(rarity) {
-    console.log("picker works");
-    this.setState({ rarity });
+  // here goes rarity  
+  handleRarityChange(rarity, index) {
+    console.log("handleRarityChange: "+rarity+" i:"+index);
     this.birdRarity = rarity;
   }
 
@@ -128,7 +126,6 @@ class DetailsScreen extends Component {
     //birdDataInstance.addBird(newBird);
 
     console.log("bring da drinks")
-
     birdDataInstance.addBird(newBird)
   }
 
@@ -142,8 +139,7 @@ render() {
       <View style={styles.container}>
 
             <Image
-              style={{width: 150, height: 150, alignSelf: "center"}}
-              
+              style={{width: 150, height: 150, alignSelf: "center"}}              
               source={{uri: 'https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg'}}
             />
         
@@ -162,21 +158,19 @@ render() {
             <Text style = {styles.text}>Choose rarity</Text>
             
             <Picker style = {styles.text}
-              selectedValue={this.handleRarityChange}
+              selectedValue={this.birdRarity}
               placeholder="Choose rarity"
-              
               onValueChange={(itemValue, itemIndex) => {
-                this.setState({rarity: itemValue});
-                // this.birdRarity = rarity; 
-                rarity = this.birdRarity;
-              }
-              }>
+                this.setState({itemValue});
+                this.handleRarityChange(itemValue, itemIndex)
                 
-                {/* maybe here value is wrong? */}
+                }
+              }>
+
+              {/* maybe here value is wrong? */}
               <Picker.Item label="Common" value="Common"/>
               <Picker.Item label="Rare" value="Rare" />
               <Picker.Item label="Extremely rare" value="ExtremelyRare"/>
-              
             </Picker>
 
             <TextInput
@@ -251,7 +245,6 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 8,
     paddingStart: 8,
-    
     fontSize: 20,
     alignItems: 'flex-start'
     
@@ -264,8 +257,7 @@ const styles = StyleSheet.create({
     paddingStart: 8,
     borderWidth: 1,
     fontSize: 20,
-    alignItems: 'flex-start'
-    
+    alignItems: 'flex-start'    
   },
 
   textInputContainer: {
@@ -273,8 +265,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     alignItems: 'stretch'
-
-
   },
 
   saveButton: {

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Button, View, Text, ListView } from 'react-native'
+import { Button, View, Text, ListView, ListItem } from 'react-native'
+
 import styles from '../App';
 import birddata from './BirdData';
+
+
 
 class HomeScreen extends Component {
 
@@ -14,6 +17,8 @@ class HomeScreen extends Component {
     console.log("HomeScreen constructor");
     this.birdDataInstance = birddata;
   }
+
+  
   
   createBirdListText() {
     console.log("createBirdListText")
@@ -47,6 +52,7 @@ class HomeScreen extends Component {
           title="Add new"
           onPress={() => this.props.navigation.navigate('Details')}
         />
+      
       </View>
     );
   }
