@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
 import birddata from './BirdData';
+
 // import styles from '../App';
 
 // import Geolocation from 'react-native-geolocation-service';
@@ -102,6 +103,13 @@ class DetailsScreen extends Component {
   } */
   
   handleSubmit() {
+
+    console.log("handleSubmit constructor");
+    //saveSettings(this.state);
+    if(!this.birdName.length>0){
+      alert("Any bird should have a name!")
+      return;
+    }
     console.log("I dont hate you")
     //let birdDataInstance = new BirdData();
     var birdDataInstance = birddata;
@@ -134,7 +142,7 @@ render() {
       <View style={styles.container}>
 
             <Image
-              style={{width: 150, height: 150, alignContent: "center"}}
+              style={{width: 150, height: 150, alignSelf: "center"}}
               
               source={{uri: 'https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg'}}
             />
@@ -150,8 +158,10 @@ render() {
               value={this.birdName}
               onChangeText={this.handleNameChange}
             />
+
+            <Text style = {styles.text}>Choose rarity</Text>
             
-            <Picker style={{width: 200, height: 44}} itemStyle={{height: 44}}
+            <Picker style = {styles.text}
               selectedValue={this.handleRarityChange}
               placeholder="Choose rarity"
               
@@ -163,7 +173,7 @@ render() {
               }>
                 
                 {/* maybe here value is wrong? */}
-              <Picker.Item label="Common" value="Common"  />
+              <Picker.Item label="Common" value="Common"/>
               <Picker.Item label="Rare" value="Rare" />
               <Picker.Item label="Extremely rare" value="ExtremelyRare"/>
               
@@ -172,6 +182,7 @@ render() {
             <TextInput
               style={styles.textInputContainer}
               style = {styles.textInput}
+              itemStyle = "baseline"
               multiline = {true}
               numberOfLines = {4}
               placeholder="Comment"
@@ -182,32 +193,41 @@ render() {
             />
 
           <Text
-            style={{
-              fontSize: 20,
-              marginTop: 16,
-            }}>Timestamp: {this.state.date}
+            style={styles.text}>Timestamp: {this.state.date}
           </Text>
+        </View>
 
-            <Button 
-              title="Save"
-              onPress={this.handleSubmit}>
-              
-            </Button>
-          
-        <Button 
-          title="Go to Details... again"
-          onPress={() => this.props.navigation.push('Details')}
-        />
-        <Button 
-          title="Go to Home"
-          onPress={() => this.props.navigation.navigate('Home')}
-        />
-        <Button 
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F5FCFF' }}>
+
+          <Button style = {styles.saveButton}
+            title="Save"
+            raised = {true}
+            onPress={this.handleSubmit}>
+                
+          </Button>
+            
+          <Button style = {styles.saveButton}
+            type="outline"
+            raised = {true}
+            title="Go to Details... again"
+            onPress={() => this.props.navigation.push('Details')}
+          />
+          <Button style = {styles.saveButton}
+            title="Go to Home"
+            raised = {true}
+            type="outline"
+            onPress={() => this.props.navigation.navigate('Home')}
+          />
+          <Button style = {styles.saveButton}
+            title="Go back"
+            raised = {true}
+            type="outline"
+            onPress={() => this.props.navigation.goBack()}
+          />
+
+        </View>
         
-      </View>
+      
       </ScrollView>  
     );
   }
@@ -219,29 +239,50 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
-    marginBottom: 16,
+    paddingBottom: 16,
+    paddingTop: 16,
+    paddingStart: 16,
+    paddingEnd: 16
+  },
+
+  text: {
+    marginTop: 8,
+    paddingStart: 8,
+    
+    fontSize: 20,
+    alignItems: 'flex-start'
+    
   },
 
   
   textInput: {
     borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    fontSize: 25,
-    alignItems: 'baseline',
-    paddingLeft: 20,
-    paddingRight: 20
+    marginTop: 8,
+    paddingStart: 8,
+    borderWidth: 1,
+    fontSize: 20,
+    alignItems: 'flex-start'
+    
   },
 
   textInputContainer: {
     height: 150,
     paddingLeft: 20,
     paddingRight: 20,
-    alignItems: 'baseline'
+    alignItems: 'stretch'
 
 
+  },
+
+  saveButton: {
+    borderWidth: 1,
+    borderColor: '#007BFF',
+    backgroundColor: '#007BFF',
+    padding: 15,
+    margin: 5,
+    alignItems: 'center'
   },
 });
