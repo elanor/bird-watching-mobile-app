@@ -51,6 +51,7 @@ class HomeScreen extends Component {
               {this.birdDataInstance.getData(name)}
 
             </ListView> */}
+
             <TouchableOpacity 
               style = {styles.saveButton}
               onPress={() => this.props.navigation.navigate('Details')}

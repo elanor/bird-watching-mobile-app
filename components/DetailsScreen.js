@@ -216,30 +216,23 @@ render() {
           
                 
             
-          <TouchableOpacity style = {styles.saveButton}           
-            type="outline"
-            raised = {true}
+         {/*  <TouchableOpacity style = {styles.saveButton}   
             onPress={() => this.props.navigation.push('Details')}
           >
             <Text style = {styles.saveButtonText}> Go to Details... again </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style = {styles.saveButton}
-            raised = {true}
-            type="outline"
+          <TouchableOpacity style = {styles.saveButton}            
             onPress={() => this.props.navigation.navigate('Home')}
           >
             <Text style = {styles.saveButtonText}> Go to Home </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
             
-          <TouchableOpacity style = {styles.saveButton}
-            
-            //title="Go back"
-            raised = {true}
-            type="outline"
-            onPress={() => this.props.navigation.goBack()}
+          <TouchableOpacity style = {styles.saveButton}            
+            //onPress={() => this.props.navigation.goBack()
+            onPress={() => {this.cancel}}
           >
-            <Text style = {styles.saveButtonText}> Go back </Text>
+            <Text style = {styles.saveButtonText}> Cancel </Text>
           </TouchableOpacity>
 
         
