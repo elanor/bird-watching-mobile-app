@@ -2,21 +2,23 @@ import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
 import birddata from './BirdData';
+import { addBird } from '../src/storage/dataStorage';
 
 // import styles from '../App';
 
 // import Geolocation from 'react-native-geolocation-service';
 //import App from '../App';
 //import { getCurrentPositionAsync } from 'expo-location';
-//import { CAMERA } from 'expo-permissions';
-//import { isFrontCameraAvailable } from 'expo/build/AR';
+import CameraRoll from 'expo';
 // import console = require('console');
 
+
+
 class DetailsScreen extends Component {
-  birdName = "Name of a bird"
-  birdRarity = "common"
+  birdName = ""
+  birdRarity = ""
   birdGeolocation= ""
-  birdImagelink=""
+  birdImagelink= ""
   birdComment = ""
   birdTimestamp = ""
 
@@ -33,10 +35,27 @@ class DetailsScreen extends Component {
       //defauilt value of the date time
       date: '',
     };
+    //this.handleAddPhotosChange = this.handleAddPhotosChange.bind(this);
 
-    /*
-    this.handleCommentChange = this.handleCommentChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this); */
+    // here goes adding pictures
+    handleAddPhotosButtonPress = () => {
+    console.log("handle_add_photo_change works")
+     CameraRoll.getPhotos({
+      first: 20,
+      assetType: 'Photos',
+    })
+
+    .then(r => {
+      this.setState({ imagelink: r.edges });
+      this.birdImagelink = imagelink;
+    })
+    .catch((err) => {
+       //Error Loading Images
+    });
+    
+     };
+    
+    
   }
 
   componentDidMount() {
@@ -59,19 +78,7 @@ class DetailsScreen extends Component {
     title: 'Details',
   };
 
-  /* handleAddPhotosButtonPress = () => {
-    CameraRoll.getPhotos({
-        first: 20,
-        assetType: 'Photos',
-      })
-
-      .then(r => {
-        this.setState({ photos: r.edges });
-      })
-      .catch((err) => {
-         //Error Loading Images
-      });
-    }; */
+  
 
     handleNameChange(name) {
       console.log("handleNameChange constructor");
@@ -92,17 +99,10 @@ class DetailsScreen extends Component {
     this.setState({ comment });
     this.birdComment = comment;
   }
- 
-  // here goes geolocation. Have not checked yet if this works
-  /* handleGeolocationChange(geolocation){
-    navigator.geolocation.getCurrentPosition(position => {
-      console.log(position);
-    }, err => console.log(err));
-  } */
   
   handleSubmit() {
 
-    console.log("handleSubmit constructor");
+    console.log("save button");
     //saveSettings(this.state);
     if(!this.birdName.length>0){
       alert("Any bird should have a name!")
@@ -110,8 +110,7 @@ class DetailsScreen extends Component {
     }
     console.log("I dont hate you")
     //let birdDataInstance = new BirdData();
-    var birdDataInstance = birddata;
-    console.log("I hate you")
+    //var birdDataInstance = birddata;
     newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
@@ -121,27 +120,43 @@ class DetailsScreen extends Component {
       timestamp: this.birdTimestamp
     } 
     
-    console.log("I am confused")
-
-    //birdDataInstance.addBird(newBird);
-
-    console.log("bring da drinks")
-    birdDataInstance.addBird(newBird)
+    //birdDataInstance.addBird(newBird)
+    addBird(this.state.newBird)
   }
-
-/* style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} */
-/* style={styles.inputContainer} */
 
 render() {
   console.log("DetailsScreen render");
     return (
-      <ScrollView> 
       <View style={styles.container}>
+        <ScrollView> 
+      
 
             <Image
-              style={{width: 150, height: 150, alignSelf: "center"}}              
+              style={{width: 150, height: 150, marginTop: 8, alignSelf: "center"}}              
               source={{uri: 'https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg'}}
             />
+
+            <TouchableOpacity 
+              style = {styles.saveButton}              
+              onPress={() => this.handleAddPhotosButtonPress} >            
+              <Text style = {styles.saveButtonText}> Load image </Text>
+            </TouchableOpacity>
+
+                <ScrollView>
+                  {this.state.imagelink}
+                 {/*  {this.state.imagelink.map((p, i) => {
+                  return (
+                    <Image
+                      key={i}
+                      style={{
+                        width: 50,
+                        height: 50,
+                      }}
+                      source={{ uri: p.node.image.uri }}
+                    />
+                  );
+                })} */}
+                </ScrollView>
         
             <TextInput 
               style={styles.textInput}
@@ -151,13 +166,15 @@ render() {
               maxLength={20}
 
               onBlur={Keyboard.dismiss}
+              
+              
               value={this.birdName}
               onChangeText={this.handleNameChange}
             />
 
             <Text style = {styles.text}>Choose rarity</Text>
             
-            <Picker style = {styles.text}
+            <Picker style = {styles.textInput}
               selectedValue={this.birdRarity}
               placeholder="Choose rarity"
               onValueChange={(itemValue, itemIndex) => {
@@ -189,40 +206,46 @@ render() {
           <Text
             style={styles.text}>Timestamp: {this.state.date}
           </Text>
-        </View>
-
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#F5FCFF' }}>
-
-          <Button style = {styles.saveButton}
-            title="Save"
+        
+          <TouchableOpacity style = {styles.saveButton}
             raised = {true}
-            onPress={this.handleSubmit}>
+            onPress={this.handleSubmit}
+          >
+            <Text style = {styles.saveButtonText}> Save </Text>
+          </TouchableOpacity>
+          
                 
-          </Button>
             
-          <Button style = {styles.saveButton}
+          <TouchableOpacity style = {styles.saveButton}           
             type="outline"
             raised = {true}
-            title="Go to Details... again"
             onPress={() => this.props.navigation.push('Details')}
-          />
-          <Button style = {styles.saveButton}
-            title="Go to Home"
+          >
+            <Text style = {styles.saveButtonText}> Go to Details... again </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style = {styles.saveButton}
             raised = {true}
             type="outline"
             onPress={() => this.props.navigation.navigate('Home')}
-          />
-          <Button style = {styles.saveButton}
-            title="Go back"
+          >
+            <Text style = {styles.saveButtonText}> Go to Home </Text>
+          </TouchableOpacity>
+            
+          <TouchableOpacity style = {styles.saveButton}
+            
+            //title="Go back"
             raised = {true}
             type="outline"
             onPress={() => this.props.navigation.goBack()}
-          />
+          >
+            <Text style = {styles.saveButtonText}> Go back </Text>
+          </TouchableOpacity>
 
-        </View>
         
-      
       </ScrollView>  
+      
+    </View>   
     );
   }
 }
@@ -236,17 +259,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
-    paddingBottom: 16,
-    paddingTop: 16,
-    paddingStart: 16,
-    paddingEnd: 16
+    paddingBottom: 4,
+  
+    paddingStart: 4,
+    paddingEnd: 4
   },
 
   text: {
     marginTop: 8,
-    paddingStart: 8,
-    fontSize: 20,
-    alignItems: 'flex-start'
+    paddingStart: 24,
+
+    fontSize: 18,
+    alignItems: 'center'
     
   },
 
@@ -254,9 +278,11 @@ const styles = StyleSheet.create({
   textInput: {
     borderColor: '#CCCCCC',
     marginTop: 8,
+    marginStart: 16,
+    marginEnd: 16,
     paddingStart: 8,
     borderWidth: 1,
-    fontSize: 20,
+    fontSize: 18,
     alignItems: 'flex-start'    
   },
 
@@ -271,8 +297,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#007BFF',
     backgroundColor: '#007BFF',
-    padding: 15,
-    margin: 5,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    marginTop: 12,
+    marginBottom: 12,
+    marginEnd: 24,
+    marginStart: 24,
+    borderRadius: 25,
+    elevation: 5
+  },
+
+  saveButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    textAlign: 'center'
   },
 });

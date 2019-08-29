@@ -1,3 +1,5 @@
+import { AsyncStorage } from 'react-native';
+
 class BirdData {
   //static instance;
 
@@ -21,8 +23,35 @@ class BirdData {
       };
     */
    
-    var birdArray = [];    
-    //
+    var birdArray = [
+
+          { id: 1, 
+            name: "Pigeon Mike", 
+            imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+            rarity: "philps", 
+            timestamp: "today", 
+            comment: "New York"
+          },
+          { id: 2, 
+            name: "Pigeon Steve", 
+            imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+            rarity: "Square", 
+            timestamp: "today", 
+            comment: "Chicago"
+          },
+          { id: 3, 
+            name: "Pigeon John", 
+            imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+            rarity: "market", 
+            timestamp: "today", 
+            comment: "New York"
+          },   
+
+    ];  
+
+    
+    
+    
     birdArray = this.readBirdsArrayFromFile();
   }
 
@@ -48,20 +77,20 @@ class BirdData {
     }
 
     // only for internal use
-    updateFile() {
+    updateFile(props) {
       console.log("updateFile");
       // save current birdArray to file
     }
 
     //takes in ONE new bird object and add it to array
-    addBird(newBird) {
+    /* addBird(newBird) {
       console.log("addBird");
-      
+      const STORAGE_KEY = 'NEWBIRD';
       //next causes eternal loop
       //this.birdArray.push(newBird);
-      
-      this.updateFile();
-    }
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newBird));
+      //this.updateFile();
+    } */
 }
 const birddata = new BirdData();
 export default birddata;

@@ -39,13 +39,7 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
 
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    marginBottom: 16,
-  },
+  
 
   item: {
       padding: 10,
@@ -70,40 +64,57 @@ const styles = StyleSheet.create({
   
   },
 
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'stretch',
+    backgroundColor: '#F5FCFF',
+    paddingBottom: 16,
+    paddingTop: 16,
+    paddingStart: 16,
+    paddingEnd: 16
+  },
 
+  text: {
+    marginTop: 8,
+    paddingStart: 8,
+    fontSize: 20,
+    alignItems: 'flex-start'
+    
+  },
+
+  
   textInput: {
     borderColor: '#CCCCCC',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    height: 50,
-    fontSize: 25,
-    paddingLeft: 20,
-    paddingRight: 20
+    marginTop: 8,
+    paddingStart: 8,
+    borderWidth: 1,
+    fontSize: 20,
+    alignItems: 'flex-start'    
   },
 
   textInputContainer: {
-    borderColor: '#CCCCCC',
-    borderWidth: 1,
-    borderBottomWidth: 1,
     height: 150,
     paddingLeft: 20,
-    paddingRight: 20
-
-
+    paddingRight: 20,
+    alignItems: 'stretch'
   },
 
   saveButton: {
     borderWidth: 1,
     borderColor: '#007BFF',
     backgroundColor: '#007BFF',
-    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
     margin: 5,
-    alignItems: 'center'
+    borderRadius: 25,
+    elevation: 5
   },
 
   saveButtonText: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center'
   },
 });
