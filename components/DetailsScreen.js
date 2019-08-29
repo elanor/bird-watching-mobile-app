@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
 import birddata from './BirdData';
-import { addBird } from '../src/storage/dataStorage';
+//import { addBird } from '../src/storage/dataStorage';
 
 // import styles from '../App';
 
@@ -24,10 +24,7 @@ class DetailsScreen extends Component {
 
   constructor(props) {
     super(props);
-    //this.state = { name: '' }
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  
+    this.handleNameChange = this.handleNameChange.bind(this); 
     this.handleRarityChange = this.handleRarityChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -81,7 +78,6 @@ class DetailsScreen extends Component {
   
 
     handleNameChange(name) {
-      console.log("handleNameChange constructor");
       this.setState({ name });
       
       this.birdName = name;
@@ -89,7 +85,7 @@ class DetailsScreen extends Component {
 
   // here goes rarity  
   handleRarityChange(rarity, index) {
-    console.log("handleRarityChange: "+rarity+" i:"+index);
+    //console.log("handleRarityChange: "+rarity+" i:"+index);
     this.birdRarity = rarity;
   }
 
@@ -114,14 +110,13 @@ class DetailsScreen extends Component {
     newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
-      geolocation: this.birdGeolocation,
-      imagelink: this.birdImagelink,
+      //imagelink: this.birdImagelink,
       comment: this.birdComment,
       timestamp: this.birdTimestamp
     } 
     
     //birdDataInstance.addBird(newBird)
-    addBird(this.state.newBird)
+    //birddata.addBird(this.state.newBird)
   }
 
 render() {
@@ -160,14 +155,11 @@ render() {
         
             <TextInput 
               style={styles.textInput}
-
               fontSize = {18}
               placeholder="Species' name"
               maxLength={20}
-
               onBlur={Keyboard.dismiss}
-              
-              
+              returnKeyType="done"
               value={this.birdName}
               onChangeText={this.handleNameChange}
             />
@@ -184,7 +176,6 @@ render() {
                 }
               }>
 
-              {/* maybe here value is wrong? */}
               <Picker.Item label="Common" value="Common"/>
               <Picker.Item label="Rare" value="Rare" />
               <Picker.Item label="Extremely rare" value="ExtremelyRare"/>
@@ -198,9 +189,10 @@ render() {
               numberOfLines = {4}
               placeholder="Comment"
               maxLength={170}
+              returnKeyType="done"
               onBlur={Keyboard.dismiss}
-              value={this.handleCommentChange}
-              // onChangeText={this.handleNameChange}
+              value={this.birdComment}
+              onChangeText={this.state.handleCommentChange}
             />
 
           <Text
@@ -229,8 +221,7 @@ render() {
           </TouchableOpacity> */}
             
           <TouchableOpacity style = {styles.saveButton}            
-            //onPress={() => this.props.navigation.goBack()
-            onPress={() => {this.cancel}}
+            onPress={() => this.props.navigation.navigate('Home')}
           >
             <Text style = {styles.saveButtonText}> Cancel </Text>
           </TouchableOpacity>

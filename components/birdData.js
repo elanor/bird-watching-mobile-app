@@ -83,14 +83,18 @@ class BirdData {
     }
 
     //takes in ONE new bird object and add it to array
-    /* addBird(newBird) {
-      console.log("addBird");
+    addBird(newBird) {
+
+      this.birdArray[this.birdArray.length] = newBird;
+      console.log("addBird test test workd yo!");
+
+      /* console.log("addBird");
       const STORAGE_KEY = 'NEWBIRD';
       //next causes eternal loop
       //this.birdArray.push(newBird);
       AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newBird));
-      //this.updateFile();
-    } */
+      //this.updateFile(); */
+    }
 }
 const birddata = new BirdData();
 export default birddata;

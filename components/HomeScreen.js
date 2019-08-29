@@ -15,6 +15,48 @@ class HomeScreen extends Component {
     super(props);
     console.log("HomeScreen constructor");
     this.birdDataInstance = birddata;
+
+    var birdArray = [
+
+      { id: 1, 
+        name: "Pigeon Mike", 
+        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+        rarity: "philps", 
+        timestamp: "today", 
+        comment: "New York"
+      },
+      { id: 2, 
+        name: "Pigeon Steve", 
+        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+        rarity: "Square", 
+        timestamp: "today", 
+        comment: "Chicago"
+      },
+      { id: 3, 
+        name: "Pigeon John", 
+        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+        rarity: "market", 
+        timestamp: "today", 
+        comment: "New York"
+      },   
+
+    ];  
+
+    console.log('main test array created');
+
+    var newBird = 
+    { id: 4, 
+      name: "Pigeon John", 
+      imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
+      rarity: "market", 
+      timestamp: "today", 
+      comment: "New York"
+    };
+
+    console.log('test newBird created')
+    birdArray[birdArray.length] = newBird;
+
+    console.log('item added to test array');
   }
 
   
@@ -51,6 +93,7 @@ class HomeScreen extends Component {
               {this.birdDataInstance.getData(name)}
 
             </ListView> */}
+
 
             <TouchableOpacity 
               style = {styles.saveButton}
