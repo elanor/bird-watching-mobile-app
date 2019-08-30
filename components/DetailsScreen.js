@@ -59,8 +59,8 @@ class DetailsScreen extends Component {
     };
     //this.handleAddPhotosChange = this.handleAddPhotosChange.bind(this);
 
-  this.birdArray = [];
-    this.birdArray = this.birdArray + getBirdArray();
+    this.birdArray = [];
+    this.birdArray = getBirdArray();
     console.log("array content: " + this.birdArray)
 
     // here goes adding pictures
