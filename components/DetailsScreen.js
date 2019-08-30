@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
-import birddata from './BirdData';
+//import birddata from './BirdData';
+
 //import { addBird } from '../src/storage/dataStorage';
 
 // import styles from '../App';
@@ -12,7 +13,27 @@ import birddata from './BirdData';
 import CameraRoll from 'expo';
 // import console = require('console');
 
+const asyncId = 'bird-1234567890-2';
 
+const getBirdArray =  async () => {
+  var array = []
+  try {
+    array += JSON.parse(await AsyncStorage.getItem('asyncId') || 'none');
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return array;
+}
+
+const saveBird = async inBirdArray => {
+  try {
+    await AsyncStorage.setItem('asyncId', JSON.stringify(inBirdArray));
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+};
 
 class DetailsScreen extends Component {
   birdName = ""
@@ -26,46 +47,49 @@ class DetailsScreen extends Component {
     super(props);
     this.handleNameChange = this.handleNameChange.bind(this); 
     this.handleRarityChange = this.handleRarityChange.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       //defauilt value of the date time
+      name: '',
+      rarity: '',
+      comment: '',
       date: '',
     };
     //this.handleAddPhotosChange = this.handleAddPhotosChange.bind(this);
 
+  this.birdArray = [];
+    this.birdArray = this.birdArray + getBirdArray();
+    console.log("array content: " + this.birdArray)
+
     // here goes adding pictures
     handleAddPhotosButtonPress = () => {
-    console.log("handle_add_photo_change works")
-     CameraRoll.getPhotos({
-      first: 20,
-      assetType: 'Photos',
-    })
+      console.log("handle_add_photo_change works")
+      CameraRoll.getPhotos({
+        first: 20,
+        assetType: 'Photos',
+      })
 
-    .then(r => {
-      this.setState({ imagelink: r.edges });
-      this.birdImagelink = imagelink;
-    })
-    .catch((err) => {
-       //Error Loading Images
-    });
-    
-     };
-    
-    
+      .then(r => {
+        this.setState({ imagelink: r.edges });
+        this.birdImagelink = imagelink;
+      })
+      .catch((err) => {
+        //Error Loading Images
+      });
+    };
+        
   }
 
   componentDidMount() {
-    var that = this;
-
     var date = new Date().getDate(); 
     var month = new Date().getMonth() + 1; 
     var year = new Date().getFullYear(); 
     var hours = new Date().getHours();
     var min = new Date().getMinutes(); 
 
-    that.setState({
-      
+    this.setState({      
       date:
         date + '/' + month + '/' + year + ' ' + hours + ':' + min,
     });
@@ -75,38 +99,34 @@ class DetailsScreen extends Component {
     title: 'Details',
   };
 
-  
-
     handleNameChange(name) {
+      console.log("handleNameChange");
       this.setState({ name });
-      
       this.birdName = name;
     }
 
   // here goes rarity  
   handleRarityChange(rarity, index) {
-    //console.log("handleRarityChange: "+rarity+" i:"+index);
+    console.log("handleRarityChange: "+rarity+" i:"+index);
     this.birdRarity = rarity;
   }
 
   // here goes comment change
   handleCommentChange(comment){
-    console.log("comment works");
+    console.log("handleCommentChange");
     this.setState({ comment });
     this.birdComment = comment;
   }
   
   handleSubmit() {
-
-    console.log("save button");
+    console.log("handleSubmit save button");
+    console.log("handleSubmit bird array lenght:" + this.birdArray.length);
     //saveSettings(this.state);
     if(!this.birdName.length>0){
       alert("Any bird should have a name!")
       return;
     }
-    console.log("I dont hate you")
-    //let birdDataInstance = new BirdData();
-    //var birdDataInstance = birddata;
+    console.log("handleSubmit 2");
     newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
@@ -114,9 +134,11 @@ class DetailsScreen extends Component {
       comment: this.birdComment,
       timestamp: this.birdTimestamp
     } 
-    
-    //birdDataInstance.addBird(newBird)
-    //birddata.addBird(this.state.newBird)
+
+    this.birdArray[this.birdArray.length] = newBird;
+    console.log("handleSubmit add new bird: " + this.birdArray.toString() );
+    saveBird(this.birdArray);
+    console.log("handleSubmit save bird :" + this.birdArray);
   }
 
 render() {
@@ -124,7 +146,6 @@ render() {
     return (
       <View style={styles.container}>
         <ScrollView> 
-      
 
             <Image
               style={{width: 150, height: 150, marginTop: 8, alignSelf: "center"}}              
@@ -192,7 +213,7 @@ render() {
               returnKeyType="done"
               onBlur={Keyboard.dismiss}
               value={this.birdComment}
-              onChangeText={this.state.handleCommentChange}
+              onChangeText={this.handleCommentChange}
             />
 
           <Text

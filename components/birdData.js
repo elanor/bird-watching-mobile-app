@@ -23,7 +23,7 @@ class BirdData {
       };
     */
    
-    var birdArray = [
+    /* var birdArray = [
 
           { id: 1, 
             name: "Pigeon Mike", 
@@ -47,7 +47,7 @@ class BirdData {
             comment: "New York"
           },   
 
-    ];  
+    ];   */
 
     
     

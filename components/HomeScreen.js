@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+//import birddata from './BirdData';
+import { AsyncStorage } from 'react-native';
 
-import birddata from './BirdData';
-
-
+const asyncId = 'bird-1234567890-2';
+  
+const getBirdArray =  async () => {
+    var array = []
+    try {
+      array += JSON.parse(await AsyncStorage.getItem('asyncId') || 'none');
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+    return array;
+  }
 
 class HomeScreen extends Component {
 
@@ -14,10 +25,12 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     console.log("HomeScreen constructor");
-    this.birdDataInstance = birddata;
-
-    var birdArray = [
-
+    //this.birdArray = [];
+    this.birdArray = getBirdArray();
+    console.log("array["+ this.birdArray.length +"] content: " + this.birdArray)
+    console.log( this.createBirdListText() )
+    //this.birdDataInstance = birddata;
+    /*var birdArray = [
       { id: 1, 
         name: "Pigeon Mike", 
         imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
@@ -39,7 +52,6 @@ class HomeScreen extends Component {
         timestamp: "today", 
         comment: "New York"
       },   
-
     ];  
 
     console.log('main test array created');
@@ -57,24 +69,17 @@ class HomeScreen extends Component {
     birdArray[birdArray.length] = newBird;
 
     console.log('item added to test array');
+    */
   }
-
-  
   
   createBirdListText() {
     console.log("createBirdListText")
-    var birdArray = birdDataInstance.getData()
+    //var birdArray = birdDataInstance.getData()
     var text = "\b"
-    /* var l = birdArrray.length
-    var i=0
-    while (l<i){
 
-      i++;
-
-    } */
-
-    for (var i=0; i < birdArray.length; i++) {
+    for (var i=0; i < this.birdArray.length; i++) {
       console.log("for loop");
+      text= text + "\n"+ i +". bird, name: "+ this.birdArray[i].name + " ";
       if(i>500){
         console.log("InfiniteLoop!!!! or 100000+ birds")
         return "";
@@ -88,12 +93,7 @@ class HomeScreen extends Component {
     return (
         <View style={styles.container}>
           <ScrollView >
-            <Text style = {styles.text}>Here goes list of species{this.createBirdListText}</Text>
-            {/* <ListView>
-              {this.birdDataInstance.getData(name)}
-
-            </ListView> */}
-
+            <Text style = {styles.text}>Here goes list of species: {this.createBirdListText()}</Text>
 
             <TouchableOpacity 
               style = {styles.saveButton}
