@@ -53,7 +53,10 @@ const fetchBirdDatas = async () => {
 
 const parseBirdDatas = (birdDatas) =>
   JSON.parse(birdDatas).map((birdData) => {
-    birdData.createdAt = new Date(birdData.createdAt)
+    birdData.rarity = new birdRarity(birdData.rarity)
+    birdData.name = new birdName(birdData.name)
+    
+    // birdData.createdAt = new Date(birdData.createdAt)
     return birdData;
   });
 
@@ -269,6 +272,9 @@ render() {
           <Text
             style={styles.text}>Timestamp: {this.state.date}
           </Text>
+
+      
+      </ScrollView>  
         
           <TouchableOpacity style = {styles.saveButton}
             raised = {true}
@@ -295,8 +301,7 @@ render() {
             <Text style = {styles.saveButtonText}> Cancel </Text>
           </TouchableOpacity>
 
-        
-      </ScrollView>        
+              
     </View>   
     );
   }

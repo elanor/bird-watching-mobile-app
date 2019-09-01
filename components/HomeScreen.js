@@ -7,8 +7,10 @@ import { AsyncStorage } from 'react-native';
 const STORAGE_KEY = 'BIRD_DATAS';
 
 const parseBirdDatas = (birdDatas) =>
-  JSON.parse(birdDatas).map((birdData) => {
-    birdData.createdAt = new Date(birdData.createdAt)
+  JSON.parse(birdDatas).map((birdData) => {    
+    //birdData.createdAt = new Date(birdData.createdAt)
+    birdData.rarity = new birdRarity(birdData.rarity)
+    birdData.name = new birdName(birdData.name)
     return birdData;
   });
   
