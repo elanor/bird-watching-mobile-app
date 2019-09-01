@@ -27,7 +27,7 @@ const STORAGE_KEY = 'BIRD_DATAS';
   }
   return array;
 } */
-const getBirdArray = async () => {
+/* const getBirdArray = async () => {
   try {
     let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
 
@@ -35,10 +35,10 @@ const getBirdArray = async () => {
 
     return parseBirdDatas(birdDatas);
   } catch (error) {
-    console.log('Error fetching High Scores', error);
+    console.log('Error fetching Bird Datas - parse', error);
   }
 }
-
+ */
 const fetchBirdDatas = async () => {
   try {
     let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
@@ -111,7 +111,7 @@ class DetailsScreen extends Component {
     //this.handleAddPhotosChange = this.handleAddPhotosChange.bind(this);
 
   this.birdArray = [];
-    this.birdArray = this.birdArray + getBirdArray();
+    this.birdArray = this.birdArray + fetchBirdDatas();
     console.log("array content: " + this.birdArray)
 
     // here goes adding pictures
@@ -176,7 +176,6 @@ class DetailsScreen extends Component {
       alert("Any bird should have a name!")
       return;
     }
-    console.log("handleSubmit 2");
     newBird = {
       name: this.birdName,
       rarity: this.birdRarity,
@@ -211,6 +210,7 @@ render() {
 
                 <ScrollView>
                   {this.state.imagelink}
+                 {/*  to fix this!!! */}
                  {/*  {this.state.imagelink.map((p, i) => {
                   return (
                     <Image
@@ -247,7 +247,6 @@ render() {
                 
                 }
               }>
-
               <Picker.Item label="Common" value="Common"/>
               <Picker.Item label="Rare" value="Rare" />
               <Picker.Item label="Extremely rare" value="ExtremelyRare"/>
@@ -276,9 +275,7 @@ render() {
             onPress={this.handleSubmit}
           >
             <Text style = {styles.saveButtonText}> Save </Text>
-          </TouchableOpacity>
-          
-                
+          </TouchableOpacity>     
             
          {/*  <TouchableOpacity style = {styles.saveButton}   
             onPress={() => this.props.navigation.push('Details')}
@@ -299,8 +296,7 @@ render() {
           </TouchableOpacity>
 
         
-      </ScrollView>  
-      
+      </ScrollView>        
     </View>   
     );
   }
@@ -324,12 +320,9 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 8,
     paddingStart: 24,
-
     fontSize: 18,
-    alignItems: 'center'
-    
+    alignItems: 'center'    
   },
-
   
   textInput: {
     borderColor: '#CCCCCC',

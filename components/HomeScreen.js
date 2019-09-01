@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-//import birddata from './BirdData';
 import { AsyncStorage } from 'react-native';
 
-const asyncId = 'bird-1234567890-1';
+//const asyncId = 'bird-1234567890-1';
 
 const STORAGE_KEY = 'BIRD_DATAS';
 
@@ -16,18 +15,12 @@ const parseBirdDatas = (birdDatas) =>
 const getBirdArray = async () => {
   try {
     let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
-
     if (birdDatas === null) { return []; }
-
     return parseBirdDatas(birdDatas);
   } catch (error) {
     console.log('Error fetching High Scores', error);
   }
 }
-
-
-
-
 
 class HomeScreen extends Component {
 
@@ -107,7 +100,6 @@ class HomeScreen extends Component {
         <View style={styles.container}>
           <ScrollView >
             <Text style = {styles.text}>Here goes list of species: {this.createBirdListText()}</Text>
-
             <TouchableOpacity 
               style = {styles.saveButton}
               onPress={() => this.props.navigation.navigate('Details')}
@@ -115,8 +107,7 @@ class HomeScreen extends Component {
               <Text style = {styles.saveButtonText}>Add new</Text>
             </TouchableOpacity>
           </ScrollView>
-        </View>
-      
+        </View>      
     );
   }
 }
@@ -126,9 +117,9 @@ export default HomeScreen;
 const styles = StyleSheet.create({
 
   item: {
-      padding: 10,
-      fontSize: 18,
-      height: 44,
+    padding: 10,
+    fontSize: 18,
+    height: 44,
     },
 
   welcome: {
@@ -141,8 +132,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5},
-
-  inputContainer: {
+    inputContainer: {
     paddingTop: 15
   },
 
@@ -151,8 +141,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
-    paddingBottom: 4,
-  
+    paddingBottom: 4,  
     paddingStart: 4,
     paddingEnd: 4
   },
@@ -160,12 +149,9 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 8,
     paddingStart: 24,
-
     fontSize: 18,
-    alignItems: 'center'
-    
+    alignItems: 'center'    
   },
-
   
   textInput: {
     borderColor: '#CCCCCC',

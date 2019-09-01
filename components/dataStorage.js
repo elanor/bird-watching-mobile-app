@@ -1,5 +1,4 @@
 import { AsyncStorage } from '@react-native';
-import React, { Component } from 'react';
 
 const STORAGE_KEY = 'BIRD_DATAS';
 
@@ -17,7 +16,7 @@ export const fetchBirdDatas = async () => {
 
     return parseBirdDatas(birdDatas);
   } catch (error) {
-    console.log('Error fetching High Scores', error);
+    console.log('Error fetching BIRD DATAS', error);
   }
 }
 
