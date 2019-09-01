@@ -90,7 +90,7 @@ class HomeScreen extends Component {
   createBirdListText() {
     // Читаем птиц из state компонента
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index}. bird, name: ${bird}`);
+    return birds.map((bird, index) => `${index}. bird, name: ${bird}`).join('\n');
   }
 
   render() {
