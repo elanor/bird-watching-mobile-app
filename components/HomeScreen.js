@@ -3,18 +3,31 @@ import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollVie
 //import birddata from './BirdData';
 import { AsyncStorage } from 'react-native';
 
-const asyncId = 'bird-1234567890-2';
+const asyncId = 'bird-1234567890-1';
+
+const STORAGE_KEY = 'BIRD_DATAS';
+
+const parseBirdDatas = (birdDatas) =>
+  JSON.parse(birdDatas).map((birdData) => {
+    birdData.createdAt = new Date(birdData.createdAt)
+    return birdData;
+  });
   
-const getBirdArray =  async () => {
-    var array = []
-    try {
-      array += JSON.parse(await AsyncStorage.getItem('asyncId') || 'none');
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-    return array;
+const getBirdArray = async () => {
+  try {
+    let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
+
+    if (birdDatas === null) { return []; }
+
+    return parseBirdDatas(birdDatas);
+  } catch (error) {
+    console.log('Error fetching High Scores', error);
   }
+}
+
+
+
+
 
 class HomeScreen extends Component {
 

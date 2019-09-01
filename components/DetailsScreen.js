@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
+
 //import birddata from './BirdData';
 
 //import { addBird } from '../src/storage/dataStorage';
@@ -11,11 +12,12 @@ import {
 //import App from '../App';
 //import { getCurrentPositionAsync } from 'expo-location';
 import CameraRoll from 'expo';
+import HomeScreen from './HomeScreen';
 // import console = require('console');
 
 const asyncId = 'bird-1234567890-2';
-
-const getBirdArray =  async () => {
+const STORAGE_KEY = 'BIRD_DATAS';
+/* const getBirdArray =  async () => {
   var array = []
   try {
     array += JSON.parse(await AsyncStorage.getItem('asyncId') || 'none');
@@ -24,16 +26,65 @@ const getBirdArray =  async () => {
     console.log(error.message);
   }
   return array;
+} */
+const getBirdArray = async () => {
+  try {
+    let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
+
+    if (birdDatas === null) { return []; }
+
+    return parseBirdDatas(birdDatas);
+  } catch (error) {
+    console.log('Error fetching High Scores', error);
+  }
 }
 
-const saveBird = async inBirdArray => {
+const fetchBirdDatas = async () => {
   try {
-    await AsyncStorage.setItem('asyncId', JSON.stringify(inBirdArray));
+    let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
+
+    if (birdDatas === null) { return []; }
+
+    return parseBirdDatas(birdDatas);
   } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
+    console.log('Error fetching BirdDatas', error);
   }
-};
+}
+
+const parseBirdDatas = (birdDatas) =>
+  JSON.parse(birdDatas).map((birdData) => {
+    birdData.createdAt = new Date(birdData.createdAt)
+    return birdData;
+  });
+
+const updateBirdDatas = async (birdArray) => {
+  try {
+    let birdDatas = await fetchBirdDatas();
+    highScores = mergeBirdDatas(birdDatas, birdArray);
+    saveBirdDatas(birdDatas);
+
+    this.setState({ birdDatas });
+
+    console.log('Bird Datas', this.state.birdDatas);
+  } catch (error) {
+    console.log('Error fetching Bird Datas', error);
+  }
+}
+
+
+const mergeBirdDatas = (birdDatas, birdArray) => {
+  const score = {
+    score: birdArray,
+    createdAt: new Date()
+  };
+
+  return [...birdDatas, score];
+}
+
+
+const saveBird = async inBirdArray => {
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(inBirdArray));
+  }
 
 class DetailsScreen extends Component {
   birdName = ""
@@ -59,8 +110,8 @@ class DetailsScreen extends Component {
     };
     //this.handleAddPhotosChange = this.handleAddPhotosChange.bind(this);
 
-    this.birdArray = [];
-    this.birdArray = getBirdArray();
+  this.birdArray = [];
+    this.birdArray = this.birdArray + getBirdArray();
     console.log("array content: " + this.birdArray)
 
     // here goes adding pictures
@@ -120,7 +171,6 @@ class DetailsScreen extends Component {
   
   handleSubmit() {
     console.log("handleSubmit save button");
-    console.log("handleSubmit bird array lenght:" + this.birdArray.length);
     //saveSettings(this.state);
     if(!this.birdName.length>0){
       alert("Any bird should have a name!")
@@ -137,7 +187,8 @@ class DetailsScreen extends Component {
 
     this.birdArray[this.birdArray.length] = newBird;
     console.log("handleSubmit add new bird: " + this.birdArray.toString() );
-    saveBird(this.birdArray);
+    updateBirdDatas(this.birdArray);
+    console.log("handleSubmit bird array length:" + this.birdArray.length);
     console.log("handleSubmit save bird :" + this.birdArray);
   }
 
