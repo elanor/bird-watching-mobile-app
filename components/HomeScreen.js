@@ -1,107 +1,53 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView, AsyncStorage, Button } from 'react-native'
-
-
-
-//const asyncId = 'bird-1234567890-1';
-
-const STORAGE_KEY = 'BIRD_DATAS';
-
-const parseBirdDatas = (birdDatas) =>
-  JSON.parse(birdDatas).map((birdData) => {    
-    //birdData.createdAt = new Date(birdData.createdAt)
-    birdData.rarity = new birdRarity(birdData.rarity)
-    birdData.name = new birdName(birdData.name)
-    return birdData;
-  });
-  
-const getBirdArray = async () => {
-  try {
-    let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
-    if (birdDatas === null) { return []; }
-    return parseBirdDatas(birdDatas);
-  } catch (error) {
-    console.log('Error fetching Bird Datas in HomeScreen', error);
-  }
-}
+import dataStorage from "../storage/dataStorage";
 
 class HomeScreen extends Component {
-
   static navigationOptions = {
-    title: 'Recorded Species',
+    title: "Recorded Species"
   };
+
+  // initialize state with empty array
+  state = {
+    birds: []
+  };
+
+  // when component is created, upload data
+  async componentDidMount() {
+    try {
+      // when list of birds updated, called this.setState and component updated
+      dataStorage.onBirdsUpdated = (birds) => this.setState({ birds });
+
+      // load all the birds from localStorage
+      await dataStorage.loadBirds();
+
+    } catch (e) {
+      console.log("Could not load birds from local storage");
+    }
+  }
 
   constructor(props) {
     super(props);
     console.log("HomeScreen constructor");
-    //this.birdArray = [];
-    this.birdArray = getBirdArray();
-    console.log("array["+ this.birdArray.length +"] content: " + this.birdArray)
-    console.log( this.createBirdListText() )
-    //this.birdDataInstance = birddata;
-    /*var birdArray = [
-      { id: 1, 
-        name: "Pigeon Mike", 
-        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
-        rarity: "philps", 
-        timestamp: "today", 
-        comment: "New York"
-      },
-      { id: 2, 
-        name: "Pigeon Steve", 
-        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
-        rarity: "Square", 
-        timestamp: "today", 
-        comment: "Chicago"
-      },
-      { id: 3, 
-        name: "Pigeon John", 
-        imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
-        rarity: "market", 
-        timestamp: "today", 
-        comment: "New York"
-      },   
-    ];  
 
-    console.log('main test array created');
+    // тут всегда будет пусто, потому что когда запускается конструктор, данных еще нет
+    console.log(this.createBirdListText());
 
-    var newBird = 
-    { id: 4, 
-      name: "Pigeon John", 
-      imagelink: "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg", 
-      rarity: "market", 
-      timestamp: "today", 
-      comment: "New York"
-    };
-
-    console.log('test newBird created')
-    birdArray[birdArray.length] = newBird;
-
-    console.log('item added to test array');
-    */
   }
-  
-  createBirdListText() {
-    console.log("createBirdListText")
-    //var birdArray = birdDataInstance.getData()
-    var text = "\b"
 
-    for (var i=0; i < this.birdArray.length; i++) {
-      console.log("for loop");
-      text= text + "\n"+ i +". bird, name: "+ this.birdArray[i].name + " ";
-      
-    }
-    return text;
+  createBirdListText() {
+    // read birds from state of component
+    const { birds } = this.state;
+    return birds.map((bird, index) => `${index}. bird, name: ${bird}`).join('\n');
   }
 
   render() {
-    console.log("bird constructor");
+    console.log("HomeScreen render");
     return (
-        <View style={styles.container}>
-          <ScrollView >
-
-            {/* 
-            
+      <View style={styles.container}>
+        <ScrollView>
+          {/* To fix this! */}
+          {/*
             <Button
               icon={{
                   name: "sort"
@@ -118,22 +64,23 @@ class HomeScreen extends Component {
                   if (nameA > nameB) {
                     return 1;
                   }
-
                   // names must be equal
                   return 0;
                 });
                 console.log('sorting button pressed')}}
             />  */}
 
-            <Text style = {styles.text}>Here goes list of species: {this.createBirdListText()}</Text>
-            <TouchableOpacity 
-              style = {styles.saveButton}
-              onPress={() => this.props.navigation.navigate('Details')}
-            >
-              <Text style = {styles.saveButtonText}>Add new</Text>
-            </TouchableOpacity>
-          </ScrollView>
-        </View>      
+          <Text style={styles.text}>
+            Here goes list of species: {this.createBirdListText()}
+          </Text>
+          <TouchableOpacity
+            style={styles.saveButton}
+            onPress={() => this.props.navigation.navigate("Details")}
+          >
+            <Text style={styles.saveButtonText}>Add new</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     );
   }
 }

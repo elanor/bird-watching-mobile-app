@@ -1,36 +1,28 @@
 import { AsyncStorage } from 'react-native';
 
-const STORAGE_KEY = 'BIRD_DATAS';
+const STORAGE_KEY = "BIRD_DATA";
 
-const parseBirdDatas = (birdDatas) =>
-  JSON.parse(birdDatas).map((birdData) => {
-    birdData.rarity = new birdRarity(birdData.rarity)
-    birdData.name = new birdName(birdData.name)
-    //birdData.createdAt = new Date(birdData.createdAt)
-    return birdData;
-  });
+export default {
+  birds: [],
+  onBirdsUpdated: null,
 
-export const fetchBirdDatas = async () => {
-  try {
-    let birdDatas = await AsyncStorage.getItem(STORAGE_KEY);
+  loadBirds: async () => {
+    const birds = await AsyncStorage.getItem(STORAGE_KEY);
+    this.birds = birds;
+    this.notifyChange();
+  },
 
-    if (birdDatas === null) { return []; }
+  saveBirds: async () => {
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(this.birds));
+  },
 
-    return parseBirdDatas(birdDatas);
-  } catch (error) {
-    console.log('Error fetching BIRD DATAS', error);
+  addBird: bird => {
+    this.birds.push(bird);
+    this.saveBirds();
+    this.notifyChange();
+  },
+
+  notifyChange() {
+    this.onBirdsUpdated && this.onBirdsUpdated(this.birds);
   }
-}
-
-export const saveBirdDatas = (birdDatas) => {
-  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(birdDatas));
-}
-
-export const mergeBirdDatas = (birdDatas, birdArray) => {
-  const score = {
-    score: birdArray,
-    createdAt: new Date()
-  };
-
-  return [...birdDatas, score];
-}
+};
