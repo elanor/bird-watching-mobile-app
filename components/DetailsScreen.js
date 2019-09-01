@@ -60,7 +60,7 @@ const parseBirdDatas = (birdDatas) =>
 const updateBirdDatas = async (birdArray) => {
   try {
     let birdDatas = await fetchBirdDatas();
-    highScores = mergeBirdDatas(birdDatas, birdArray);
+    birdDatas = mergeBirdDatas(birdDatas, birdArray);
     saveBirdDatas(birdDatas);
 
     this.setState({ birdDatas });

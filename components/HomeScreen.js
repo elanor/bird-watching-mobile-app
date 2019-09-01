@@ -18,7 +18,7 @@ const getBirdArray = async () => {
     if (birdDatas === null) { return []; }
     return parseBirdDatas(birdDatas);
   } catch (error) {
-    console.log('Error fetching High Scores', error);
+    console.log('Error fetching Bird Datas', error);
   }
 }
 
@@ -86,10 +86,7 @@ class HomeScreen extends Component {
     for (var i=0; i < this.birdArray.length; i++) {
       console.log("for loop");
       text= text + "\n"+ i +". bird, name: "+ this.birdArray[i].name + " ";
-      if(i>500){
-        console.log("InfiniteLoop!!!! or 100000+ birds")
-        return "";
-      }
+      
     }
     return text;
   }
