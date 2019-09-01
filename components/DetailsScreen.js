@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import { 
   Button, View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
 
-//import birddata from './BirdData';
-
 //import { addBird } from '../src/storage/dataStorage';
 
 // import styles from '../App';
 
-// import Geolocation from 'react-native-geolocation-service';
-//import App from '../App';
-//import { getCurrentPositionAsync } from 'expo-location';
+
 import CameraRoll from 'expo';
 import HomeScreen from './HomeScreen';
 // import console = require('console');
@@ -47,7 +43,7 @@ const fetchBirdDatas = async () => {
 
     return parseBirdDatas(birdDatas);
   } catch (error) {
-    console.log('Error fetching BirdDatas', error);
+    console.log('Error fetching BirdDatas in DetailsScreen', error);
   }
 }
 
@@ -59,6 +55,10 @@ const parseBirdDatas = (birdDatas) =>
     // birdData.createdAt = new Date(birdData.createdAt)
     return birdData;
   });
+
+const saveBirdDatas = (birdDatas) => {
+  AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(birdDatas));
+}
 
 const updateBirdDatas = async (birdArray) => {
   try {

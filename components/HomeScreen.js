@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import { AsyncStorage } from 'react-native';
+import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView, AsyncStorage, Button } from 'react-native'
+
+
 
 //const asyncId = 'bird-1234567890-1';
 
@@ -20,7 +21,7 @@ const getBirdArray = async () => {
     if (birdDatas === null) { return []; }
     return parseBirdDatas(birdDatas);
   } catch (error) {
-    console.log('Error fetching Bird Datas', error);
+    console.log('Error fetching Bird Datas in HomeScreen', error);
   }
 }
 
@@ -98,6 +99,32 @@ class HomeScreen extends Component {
     return (
         <View style={styles.container}>
           <ScrollView >
+
+            {/* 
+            
+            <Button
+              icon={{
+                  name: "sort"
+                  size: 15
+                  color: "black"
+                }}
+              onPress={() => {
+                birdArray.sort(function(a, b) {
+                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                  if (nameA < nameB) {
+                    return -1;
+                  }
+                  if (nameA > nameB) {
+                    return 1;
+                  }
+
+                  // names must be equal
+                  return 0;
+                });
+                console.log('sorting button pressed')}}
+            />  */}
+
             <Text style = {styles.text}>Here goes list of species: {this.createBirdListText()}</Text>
             <TouchableOpacity 
               style = {styles.saveButton}
