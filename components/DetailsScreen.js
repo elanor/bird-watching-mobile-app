@@ -86,10 +86,7 @@ class DetailsScreen extends Component {
               marginTop: 8,
               alignSelf: "center"
             }}
-            source={{
-              uri:
-                "https://www.allaboutbirds.org/guide/assets/photo/66031271-480px.jpg"
-            }}
+            source={require('../assets/flamingo.png')}
           />
 
           <TextInput
