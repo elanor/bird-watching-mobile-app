@@ -9,7 +9,7 @@ class DetailsScreen extends Component {
   birdRarity = "";
   birdImagelink = "";
   birdComment = "";
-  birdTimestamp = "";
+  birdDate = "";
 
   constructor(props) {
     super(props);
@@ -36,6 +36,10 @@ class DetailsScreen extends Component {
     this.setState({
       date: date + "/" + month + "/" + year + " " + hours + ":" + min
     });
+
+    // adding timestamp to array
+    this.setState({ date });
+    this.birdTimestamp = date;
   }
 
   static navigationOptions = {
@@ -92,6 +96,8 @@ class DetailsScreen extends Component {
 
     //saving to storage
     dataStorage.addBird(newBird);
+
+    
   }
 
   render() {

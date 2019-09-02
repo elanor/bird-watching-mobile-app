@@ -38,7 +38,7 @@ class HomeScreen extends Component {
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index}. bird, name: ${bird.name}, rarity: ${bird.rarity}, comment: ${bird.comment}`).join('\n');
+    return birds.map((bird, index) => `${index}. bird, name: ${bird.name}, rarity: ${bird.rarity}, comment: ${bird.comment}, created: ${bird.date}`).join('\n');
     
   }
 
@@ -81,13 +81,15 @@ class HomeScreen extends Component {
           <Text style={styles.text}>
             {this.createBirdListText()}
           </Text>
-          <TouchableOpacity
+          
+        </ScrollView>
+
+        <TouchableOpacity
             style={styles.saveButton}
             onPress={() => this.props.navigation.navigate("Details")}
           >
             <Text style={styles.saveButtonText}>Add new</Text>
           </TouchableOpacity>
-        </ScrollView>
       </View>
     );
   }
