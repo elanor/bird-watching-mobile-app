@@ -30,7 +30,5 @@ export default {
     this.birds.push(bird);
     this.saveBirds();
     this.notifyChange();
-  }
-
-  
+  }  
 };

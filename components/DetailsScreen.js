@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { 
-  View, Text, ScrollView, CameraRoll, TextInput, TouchableOpacity, Keyboard, Picker, Image, StyleSheet} from 'react-native';
+  View, Text, ScrollView, TextInput, TouchableOpacity, Keyboard, Picker, Image, StyleSheet} from 'react-native';
 
 import dataStorage from "../storage/dataStorage";
 
 class DetailsScreen extends Component {
   birdName = "";
   birdRarity = "";
-  birdImagelink = "";
   birdComment = "";
   birdDate = "";
 
@@ -22,10 +21,10 @@ class DetailsScreen extends Component {
       name: "",
       rarity: "common",
       comment: "",
-      date: "",
-      imagelink: "assets/flamingo.png"
-    };  
-  }
+      date: ""
+    }
+  }  
+  
 
   componentDidMount() {
     var date = new Date().getDate();
@@ -39,26 +38,6 @@ class DetailsScreen extends Component {
     });
   }
 
-  static navigationOptions = {
-    title: "Details"
-  };
-
-  // here goes adding pictures
-  handleAddPhotosButtonPress = () => {
-    console.log("handle_add_photo_change works");
-    CameraRoll.getPhotos({
-      first: 20,
-      assetType: "Photos"
-    })
-      .then(r => {
-        this.setState({ imagelink: r.edges });
-        this.birdImagelink = imagelink; 
-      })
-      .catch(err => {
-        //Error Loading Images
-      });
-  };
-
   handleNameChange(name) {
     console.log("handleNameChange");
     this.setState({ name });
@@ -67,8 +46,7 @@ class DetailsScreen extends Component {
 
   // here goes rarity
   handleRarityChange(rarity) {
-    console.log("handleRarityChange: " + rarity);
-    
+    console.log("handleRarityChange: " + rarity);    
     this.setState({ rarity });
     this.birdRarity = rarity;    
     
@@ -114,30 +92,6 @@ class DetailsScreen extends Component {
             }}
           />
 
-          <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => this.handleAddPhotosButtonPress}
-          >
-            <Text style={styles.saveButtonText}> Load image </Text>
-          </TouchableOpacity>
-
-          <ScrollView>
-            {/* {this.state.imagelink} */}
-            {/*  to fix this!!! */}
-            {/* {this.state.imagelink.map((p, i) => {
-                  return (
-                    <Image
-                      key={i}
-                      style={{
-                        width: 50,
-                        height: 50,
-                      }}
-                      source={{ uri: p.node.image.uri }}
-                    />
-                  );
-                })}  */}
-          </ScrollView>
-
           <TextInput
             style={styles.textInput}
             fontSize={18}
@@ -160,9 +114,9 @@ class DetailsScreen extends Component {
             }}
           >
             <Picker.Item label='Please select an option...' value="0"/>
-            <Picker.Item label="Common" value="Common" />
-            <Picker.Item label="Rare" value="Rare" />
-            <Picker.Item label="Extremely rare" value="ExtremelyRare" />
+            <Picker.Item label="Common" value="common" />
+            <Picker.Item label="Rare" value="rare" />
+            <Picker.Item label="Extremely rare" value="extremely rare" />
           </Picker>
 
           <TextInput
@@ -188,17 +142,6 @@ class DetailsScreen extends Component {
         >
           <Text style={styles.saveButtonText}> Save </Text>
         </TouchableOpacity>
-
-        {/*  <TouchableOpacity style = {styles.saveButton}   
-            onPress={() => this.props.navigation.push('Details')}
-          >
-            <Text style = {styles.saveButtonText}> Go to Details... again </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style = {styles.saveButton}            
-            onPress={() => this.props.navigation.navigate('Home')}
-          >
-            <Text style = {styles.saveButtonText}> Go to Home </Text>
-          </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.saveButton}

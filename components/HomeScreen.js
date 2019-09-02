@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, ListItem, Flatlist, TouchableOpacity, StyleSheet, ScrollView, Button } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import dataStorage from "../storage/dataStorage";
 
 class HomeScreen extends Component {
@@ -30,17 +30,12 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
     console.log("HomeScreen constructor");
-
-    // тут всегда будет пусто, потому что когда запускается конструктор, данных еще нет
-    console.log(this.createBirdListText());
-
   }
 
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index + 1}. bird, name: ${bird.name}, rarity: ${bird.rarity}, created: ${bird.date}, comment: ${bird.comment}`).join('\n');
-    
+    return birds.map((bird, index) => `${index + 1}. bird\nname: ${bird.name}\nrarity: ${bird.rarity}\ncreated: ${bird.date}\ncomment: ${bird.comment}\n`).join('\n');  
   }
 
   render() {
@@ -48,33 +43,6 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          {/* To fix this! */}
-          
-            {/* <Button style = {styles.saveButton}
-            
-            title = "Sort birds"
-              icon={{
-                  name: '/assets/sort',
-                  size: 15,
-                  color: "black"
-                }}
-              onPress={() => {
-                console.log("sorting button pressed")
-                this.setstate.sort(function(a, b) {
-                  var nameA = a.name.toUpperCase(); 
-                  var nameB = b.name.toUpperCase(); 
-                  if (nameA < nameB) {
-                    return -1;
-                  }
-                  if (nameA > nameB) {
-                    return 1;
-                  }
-                  // names must be equal
-                  return 0;
-                })
-              }
-                }
-            />   */}
 
           <Text style={styles.text}>
             Tap the list to change sorting order 
@@ -100,10 +68,6 @@ class HomeScreen extends Component {
           >
             <Text style={styles.text}>{this.createBirdListText()}</Text>
           </TouchableOpacity>
-
-          {/* <Text style={styles.text}>
-            {this.createBirdListText()}
-          </Text>     */}    
           
         </ScrollView>
 
