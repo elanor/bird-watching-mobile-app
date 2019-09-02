@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { 
-  View, Text, ScrollView, CameraRoll, TextInput, TouchableOpacity, Keyboard, Picker, Image, AsyncStorage, StyleSheet} from 'react-native';
+  View, Text, ScrollView, CameraRoll, TextInput, TouchableOpacity, Keyboard, Picker, Image, StyleSheet} from 'react-native';
 
 import dataStorage from "../storage/dataStorage";
 
@@ -22,7 +22,8 @@ class DetailsScreen extends Component {
       name: "",
       rarity: "common",
       comment: "",
-      date: ""
+      date: "",
+      imagelink: "assets/flamingo.png"
     };  
   }
 
@@ -36,10 +37,6 @@ class DetailsScreen extends Component {
     this.setState({
       date: date + "/" + month + "/" + year + " " + hours + ":" + min
     });
-
-    // adding timestamp to array
-    this.setState({ date });
-    this.birdTimestamp = date;
   }
 
   static navigationOptions = {
@@ -55,7 +52,7 @@ class DetailsScreen extends Component {
     })
       .then(r => {
         this.setState({ imagelink: r.edges });
-        this.birdImagelink = imagelink;
+        this.birdImagelink = imagelink; 
       })
       .catch(err => {
         //Error Loading Images
@@ -97,7 +94,7 @@ class DetailsScreen extends Component {
     //saving to storage
     dataStorage.addBird(newBird);
 
-    
+    alert("The birdie " + `${newBird.name}` + " is saved to the list");
   }
 
   render() {
@@ -119,16 +116,16 @@ class DetailsScreen extends Component {
           />
 
           <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => this.handleAddPhotosButtonPress}
+            /* style={styles.saveButton}
+            onPress={() => this.handleAddPhotosButtonPress} */
           >
             <Text style={styles.saveButtonText}> Load image </Text>
           </TouchableOpacity>
 
           <ScrollView>
-            {this.state.imagelink}
+            {/* {this.state.imagelink} */}
             {/*  to fix this!!! */}
-            {/*  {this.state.imagelink.map((p, i) => {
+            {/* {this.state.imagelink.map((p, i) => {
                   return (
                     <Image
                       key={i}
@@ -139,7 +136,7 @@ class DetailsScreen extends Component {
                       source={{ uri: p.node.image.uri }}
                     />
                   );
-                })} */}
+                })}  */}
           </ScrollView>
 
           <TextInput
@@ -224,8 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
-    paddingBottom: 4,
-  
+    paddingBottom: 4,  
     paddingStart: 4,
     paddingEnd: 4
   },

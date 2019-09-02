@@ -6,3 +6,4 @@ $ expo init bird-watching-mobile-app
 $ cd bird-watching-mobile-app/
 $ npm start
 
+Files have been saved and stored offline using AsyncStorage.

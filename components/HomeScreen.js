@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView, AsyncStorage, Button } from 'react-native'
 import dataStorage from "../storage/dataStorage";
+import { FlatList } from 'react-native-gesture-handler';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -38,7 +39,7 @@ class HomeScreen extends Component {
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index}. bird, name: ${bird.name}, rarity: ${bird.rarity}, comment: ${bird.comment}, created: ${bird.date}`).join('\n');
+    return birds.map((bird, index) => `${index +1}. bird, name: ${bird.name}, rarity: ${bird.rarity}, created: ${bird.date}, comment: ${bird.comment}`).join('\n');
     
   }
 
@@ -59,7 +60,7 @@ class HomeScreen extends Component {
                 }}
               onPress={() => {
                 console.log("sorting button pressed")
-                this.birds.sort(function(a, b) {
+                this.setstate.sort(function(a, b) {
                   var nameA = a.name.toUpperCase(); // ignore upper and lowercase
                   var nameB = b.name.toUpperCase(); // ignore upper and lowercase
                   if (nameA < nameB) {
@@ -77,10 +78,10 @@ class HomeScreen extends Component {
 
           <Text style={styles.text}>
             Here goes list of species: 
-            </Text>
+          </Text>
           <Text style={styles.text}>
             {this.createBirdListText()}
-          </Text>
+          </Text>        
           
         </ScrollView>
 
@@ -103,6 +104,9 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
+    marginTop: 8,
+    fontSize: 18,
+    alignItems: 'flex-start'  
     },
 
   welcome: {
