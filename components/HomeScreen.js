@@ -16,7 +16,7 @@ class HomeScreen extends Component {
   async componentDidMount() {
     try {
       // when list of birds updated, called this.setState and component updated
-      dataStorage.onBirdsUpdated = (birds) => this.setState({ birds });
+      dataStorage.onBirdsUpdated = birds => this.setState({ birds });
 
       // load all the birds from localStorage
       await dataStorage.loadBirds();
@@ -38,7 +38,8 @@ class HomeScreen extends Component {
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index}. bird, name: ${bird}`).join('\n');
+    return birds.map((bird, index) => `${index}. bird, name: ${bird.name}, rarity: ${bird.rarity}, comment: ${bird.comment}`).join('\n');
+    
   }
 
   render() {
@@ -47,15 +48,18 @@ class HomeScreen extends Component {
       <View style={styles.container}>
         <ScrollView>
           {/* To fix this! */}
-          {/*
-            <Button
+          
+            <Button style = {styles.saveButton}
+            
+            title = "Sort birds"
               icon={{
-                  name: "sort"
-                  size: 15
+                  name: '/assets/sort',
+                  size: 15,
                   color: "black"
                 }}
               onPress={() => {
-                birdArray.sort(function(a, b) {
+                console.log("sorting button pressed")
+                this.birds.sort(function(a, b) {
                   var nameA = a.name.toUpperCase(); // ignore upper and lowercase
                   var nameB = b.name.toUpperCase(); // ignore upper and lowercase
                   if (nameA < nameB) {
@@ -66,12 +70,16 @@ class HomeScreen extends Component {
                   }
                   // names must be equal
                   return 0;
-                });
-                console.log('sorting button pressed')}}
-            />  */}
+                })
+              }
+                }
+            />  
 
           <Text style={styles.text}>
-            Here goes list of species: {this.createBirdListText()}
+            Here goes list of species: 
+            </Text>
+          <Text style={styles.text}>
+            {this.createBirdListText()}
           </Text>
           <TouchableOpacity
             style={styles.saveButton}

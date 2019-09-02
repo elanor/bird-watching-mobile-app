@@ -20,7 +20,7 @@ class DetailsScreen extends Component {
 
     this.state = {
       name: "",
-      rarity: "",
+      rarity: "common",
       comment: "",
       date: ""
     };  
@@ -65,9 +65,12 @@ class DetailsScreen extends Component {
   }
 
   // here goes rarity
-  handleRarityChange(rarity, index) {
-    console.log("handleRarityChange: " + rarity + " i:" + index);
-    this.birdRarity = rarity;
+  handleRarityChange(rarity) {
+    console.log("handleRarityChange: " + rarity);
+    
+    this.setState({ rarity });
+    this.birdRarity = rarity;    
+    
   }
 
   // here goes comment change
@@ -150,11 +153,11 @@ class DetailsScreen extends Component {
             style={styles.textInput}
             selectedValue={this.birdRarity}
             placeholder="Choose rarity"
-            onValueChange={(itemValue, itemIndex) => {
-              this.setState({ itemValue });
+            onValueChange={(itemValue, itemIndex) => {              
               this.handleRarityChange(itemValue, itemIndex);
             }}
           >
+            <Picker.Item label='Please select an option...' value="0"/>
             <Picker.Item label="Common" value="Common" />
             <Picker.Item label="Rare" value="Rare" />
             <Picker.Item label="Extremely rare" value="ExtremelyRare" />
