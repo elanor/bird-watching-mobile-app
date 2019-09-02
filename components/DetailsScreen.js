@@ -93,7 +93,6 @@ class DetailsScreen extends Component {
 
     //saving to storage
     dataStorage.addBird(newBird);
-
     alert("The birdie " + `${newBird.name}` + " is saved to the list");
   }
 
@@ -116,8 +115,8 @@ class DetailsScreen extends Component {
           />
 
           <TouchableOpacity
-            /* style={styles.saveButton}
-            onPress={() => this.handleAddPhotosButtonPress} */
+            style={styles.saveButton}
+            onPress={() => this.handleAddPhotosButtonPress}
           >
             <Text style={styles.saveButtonText}> Load image </Text>
           </TouchableOpacity>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, ListItem, TouchableOpacity, StyleSheet, ScrollView, AsyncStorage, Button } from 'react-native'
+import { View, Text, ListView, ListItem, Flatlist, TouchableOpacity, StyleSheet, ScrollView, Button } from 'react-native'
 import dataStorage from "../storage/dataStorage";
-import { FlatList } from 'react-native-gesture-handler';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -10,7 +9,8 @@ class HomeScreen extends Component {
 
   // initialize state with empty array
   state = {
-    birds: []
+    birds: [],
+    sorting: "asc"
   };
 
   // when component is created, upload data
@@ -39,7 +39,7 @@ class HomeScreen extends Component {
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index +1}. bird, name: ${bird.name}, rarity: ${bird.rarity}, created: ${bird.date}, comment: ${bird.comment}`).join('\n');
+    return birds.map((bird, index) => `${index + 1}. bird, name: ${bird.name}, rarity: ${bird.rarity}, created: ${bird.date}, comment: ${bird.comment}`).join('\n');
     
   }
 
@@ -50,7 +50,7 @@ class HomeScreen extends Component {
         <ScrollView>
           {/* To fix this! */}
           
-            <Button style = {styles.saveButton}
+            {/* <Button style = {styles.saveButton}
             
             title = "Sort birds"
               icon={{
@@ -61,8 +61,8 @@ class HomeScreen extends Component {
               onPress={() => {
                 console.log("sorting button pressed")
                 this.setstate.sort(function(a, b) {
-                  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-                  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                  var nameA = a.name.toUpperCase(); 
+                  var nameB = b.name.toUpperCase(); 
                   if (nameA < nameB) {
                     return -1;
                   }
@@ -74,14 +74,36 @@ class HomeScreen extends Component {
                 })
               }
                 }
-            />  
+            />   */}
 
           <Text style={styles.text}>
-            Here goes list of species: 
+            Tap the list to change sorting order 
           </Text>
-          <Text style={styles.text}>
+
+          <TouchableOpacity
+            onPress={() => {
+              const { sorting, birds } = this.state;
+              const sortedBirds = [...birds].sort((a, b) => {
+                if (a.name < b.name) return 1;
+                if (a.name > b.name) return -1;
+                return 0;
+              });
+              const newSorting = sorting === "asc" ? "desc" : "asc";
+              if (newSorting === "desc") {
+                sortedBirds.reverse();
+              }
+              this.setState({
+                sorting: newSorting,
+                birds: sortedBirds
+              });
+            }}
+          >
+            <Text style={styles.text}>{this.createBirdListText()}</Text>
+          </TouchableOpacity>
+
+          {/* <Text style={styles.text}>
             {this.createBirdListText()}
-          </Text>        
+          </Text>     */}    
           
         </ScrollView>
 
