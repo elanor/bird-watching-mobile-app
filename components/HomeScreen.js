@@ -1,5 +1,11 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView
+} from "react-native";
 import dataStorage from "../storage/dataStorage";
 
 class HomeScreen extends Component {
@@ -21,7 +27,6 @@ class HomeScreen extends Component {
 
       // load all the birds from localStorage
       await dataStorage.loadBirds();
-
     } catch (e) {
       console.log("Could not load birds from local storage");
     }
@@ -35,7 +40,14 @@ class HomeScreen extends Component {
   createBirdListText() {
     // read birds from state of component
     const { birds } = this.state;
-    return birds.map((bird, index) => `${index + 1}. bird\nname: ${bird.name}\nrarity: ${bird.rarity}\ncreated: ${bird.date}\ncomment: ${bird.comment}\n`).join('\n');  
+    return birds
+      .map(
+        (bird, index) =>
+          `${index + 1}. bird\nname: ${bird.name}\nrarity: ${
+            bird.rarity
+          }\ncreated: ${bird.date}\ncomment: ${bird.comment}\n`
+      )
+      .join("\n");
   }
 
   render() {
@@ -43,10 +55,7 @@ class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-
-          <Text style={styles.text}>
-            Tap the list to change sorting order 
-          </Text>
+          <Text style={styles.text}>Tap the list to change sorting order</Text>
 
           <TouchableOpacity
             onPress={() => {
@@ -68,15 +77,14 @@ class HomeScreen extends Component {
           >
             <Text style={styles.text}>{this.createBirdListText()}</Text>
           </TouchableOpacity>
-          
         </ScrollView>
 
         <TouchableOpacity
-            style={styles.saveButton}
-            onPress={() => this.props.navigation.navigate("Details")}
-          >
-            <Text style={styles.saveButtonText}>Add new</Text>
-          </TouchableOpacity>
+          style={styles.saveButton}
+          onPress={() => this.props.navigation.navigate("Details")}
+        >
+          <Text style={styles.saveButtonText}>Add new</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -85,36 +93,36 @@ class HomeScreen extends Component {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-
   item: {
     padding: 10,
     fontSize: 18,
     height: 44,
     marginTop: 8,
     fontSize: 18,
-    alignItems: 'flex-start'  
-    },
+    alignItems: "flex-start"
+  },
 
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    textAlign: "center",
+    margin: 10
   },
 
   instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5},
-    inputContainer: {
+    textAlign: "center",
+    color: "#333333",
+    marginBottom: 5
+  },
+  inputContainer: {
     paddingTop: 15
   },
 
   container: {
     flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
-    backgroundColor: '#F5FCFF',
-    paddingBottom: 4,  
+    justifyContent: "space-around",
+    alignItems: "stretch",
+    backgroundColor: "#F5FCFF",
+    paddingBottom: 4,
     paddingStart: 4,
     paddingEnd: 4
   },
@@ -123,33 +131,33 @@ const styles = StyleSheet.create({
     marginTop: 8,
     paddingStart: 24,
     fontSize: 18,
-    alignItems: 'center'    
+    alignItems: "center"
   },
-  
+
   textInput: {
-    borderColor: '#CCCCCC',
+    borderColor: "#CCCCCC",
     marginTop: 8,
     marginStart: 16,
     marginEnd: 16,
     paddingStart: 8,
     borderWidth: 1,
     fontSize: 18,
-    alignItems: 'flex-start'    
+    alignItems: "flex-start"
   },
 
   textInputContainer: {
     height: 150,
     paddingLeft: 20,
     paddingRight: 20,
-    alignItems: 'stretch'
+    alignItems: "stretch"
   },
 
   saveButton: {
     borderWidth: 1,
-    borderColor: '#007BFF',
-    backgroundColor: '#007BFF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderColor: "#007BFF",
+    backgroundColor: "#007BFF",
+    alignItems: "center",
+    justifyContent: "center",
     padding: 10,
     marginTop: 12,
     marginBottom: 12,
@@ -160,8 +168,8 @@ const styles = StyleSheet.create({
   },
 
   saveButtonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 18,
-    textAlign: 'center'
-  },
+    textAlign: "center"
+  }
 });

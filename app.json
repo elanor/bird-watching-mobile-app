@@ -1,29 +1,26 @@
 {
   "name": "bird-watching-app",
   "displayName": "Birds Today",
-  
   "expo": {
     "name": "Birds Today",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "34.0.0",
     "version": "1.0.0",
-
     "orientation": "portrait",
     "icon": "./assets/icon_white.png",
     "splash": {
       "image": "./assets/splash_background.png",
       "resizeMode": "contain",
       "backgroundColor": "#F5FCFF"
-      
     },
-    
-
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "description": "",
+    "githubUrl": "https://github.com/elanor/bird-watching-mobile-app"
   }
 }
